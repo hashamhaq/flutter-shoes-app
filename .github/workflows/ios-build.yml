@@ -15,7 +15,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.13.0 # Update this to match your Flutter version
+          flutter-version: 3.13.0  # Update based on your project needs
 
       - name: Install Dependencies
         run: flutter pub get
@@ -26,7 +26,11 @@ jobs:
       - name: Build iOS
         run: flutter build ios --no-codesign
 
+      - name: Check if build directory exists
+        run: ls -la build/ios/iphoneos/ || echo "Build directory not found"
+
       - name: Upload Build Artifact
+        if: success()
         uses: actions/upload-artifact@v3
         with:
           name: ios-build
